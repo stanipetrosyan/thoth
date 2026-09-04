@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Domain;
 using Editor.Adapters;
-using Editor.Domain;
 using UnityEditor;
+using UnityEngine;
 
 namespace Editor.Inspectors {
     [CustomEditor(typeof(DSDialogue))]
@@ -126,7 +126,7 @@ namespace Editor.Inspectors {
                 selectedDialogueIndexProperty.intValue, dialogueNames.ToArray());
 
             var selectedDialogueName = dialogueNames[selectedDialogueIndexProperty.intValue];
-            DSDialogueSO selectedDialogue = Assets.LoadAsset<DSDialogueSO>(dialogueFolderPath, selectedDialogueName);
+            DSDialogueSo selectedDialogue = Assets.LoadAsset<DSDialogueSo>(dialogueFolderPath, selectedDialogueName);
 
             dialogueProperty.objectReferenceValue = selectedDialogue;
 

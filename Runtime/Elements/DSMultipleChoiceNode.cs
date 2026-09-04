@@ -1,7 +1,5 @@
 using Domain;
-using Editor.Domain;
-using Editor.Elements;
-using Editor.Style;
+using Style;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;

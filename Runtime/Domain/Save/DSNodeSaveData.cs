@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Editor.Domain;
 using UnityEngine;
 
 namespace Domain.Save {

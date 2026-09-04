@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.UIElements;
 
-namespace Editor.Style {
+namespace Style {
     public class DSButton : Button {
         public DSButton(string text, Action onClick = null) {
             this.text = text;

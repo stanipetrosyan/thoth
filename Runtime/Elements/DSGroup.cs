@@ -1,7 +1,7 @@
 
 using UnityEditor.Experimental.GraphView;
 
-namespace Editor.Elements {
+namespace Elements {
     public class DSGroup: Group {
     }
 }

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Editor.Domain;
 using UnityEngine;
 
 namespace Domain {
-    public class DSDialogueSO : ScriptableObject {
+    public class DSDialogueSo : ScriptableObject {
         [field: SerializeField] public string DialogueName { get; set; }
 
         [field: SerializeField]
@@ -29,7 +28,7 @@ namespace Domain {
         [Serializable]
         public class DSDialogueChoiceData {
             [field: SerializeField] public string Text { get; set; }
-            [field: SerializeField] public DSDialogueSO NextDialogue { get; set; }
+            [field: SerializeField] public DSDialogueSo NextDialogue { get; set; }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using Domain;
 using Domain.Save;
 using Editor.Elements;
+using Elements;
 using thot.DS.Windows;
 using UnityEditor.Experimental.GraphView;
 
@@ -12,13 +13,13 @@ namespace Editor.Adapters {
         private DSGraphView graphView;
         private const string containerFolderPath = "Assets/DialogueSystem/Dialogues";
 
-        private Dictionary<string, DSDialogueSO> createdDialogues;
+        private Dictionary<string, DSDialogueSo> createdDialogues;
         private Dictionary<string, DSNode> loadedNodes;
 
         public FileSystemGraph(DSGraphView dsGraphView) {
             this.graphView = dsGraphView;
 
-            createdDialogues = new Dictionary<string, DSDialogueSO>();
+            createdDialogues = new Dictionary<string, DSDialogueSo>();
             loadedNodes = new Dictionary<string, DSNode>();
         }
 
@@ -66,7 +67,7 @@ namespace Editor.Adapters {
 
         private void SaveNodeToScriptableObject(DSNode node, DSDialogueContainerSO dialogueContainer) {
             var dialogue =
-                Assets.UpsertAsset<DSDialogueSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+                Assets.UpsertAsset<DSDialogueSo>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
             dialogueContainer.AddDialogue(dialogue);
 
             dialogue.Initialize(
@@ -82,8 +83,8 @@ namespace Editor.Adapters {
             Assets.SaveAsset(dialogue);
         }
 
-        private static List<DSDialogueSO.DSDialogueChoiceData> FromNodeChoices(List<DSChoice> nodeChoices) {
-            return nodeChoices.Select(node => new DSDialogueSO.DSDialogueChoiceData {
+        private static List<DSDialogueSo.DSDialogueChoiceData> FromNodeChoices(List<DSChoice> nodeChoices) {
+            return nodeChoices.Select(node => new DSDialogueSo.DSDialogueChoiceData {
                     Text = node.Text
                 }
             ).ToList();
@@ -91,7 +92,7 @@ namespace Editor.Adapters {
 
         private void UpdateDialogChoicesConnections(List<DSNode> nodes) {
             foreach (DSNode node in nodes) {
-                DSDialogueSO dialogue = createdDialogues[node.ID];
+                DSDialogueSo dialogue = createdDialogues[node.ID];
 
                 for (int choiceIndex = 0; choiceIndex < node.Choices.Count; ++choiceIndex) {
                     var nodeChoice = node.Choices[choiceIndex];

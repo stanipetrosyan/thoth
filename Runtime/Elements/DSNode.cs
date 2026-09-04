@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Domain;
-using Editor.Domain;
-using Editor.Style;
-using Elements;
+using Editor.Elements;
+using Style;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Elements {
+namespace Elements {
     public class DSNode : Node {
         public string ID { get; set; }
         public string DialogueName { get; set; }

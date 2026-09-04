@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-namespace Editor.Style {
+namespace Style {
     public class DSTextField : TextField {
         public DSTextField(string text, EventCallback<ChangeEvent<string>> onChange = null) {
             this.text = text;

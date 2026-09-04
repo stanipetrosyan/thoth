@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using Editor.Domain;
+using Domain;
 using Editor.Elements;
+using Elements;
 using thot.DS.Windows;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;

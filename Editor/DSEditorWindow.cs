@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Web;
 using Editor.Adapters;
-using Editor.Style;
+using Style;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
