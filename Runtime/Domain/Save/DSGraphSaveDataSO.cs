@@ -3,7 +3,7 @@ using System.Linq;
 using Editor.Elements;
 using UnityEngine;
 
-namespace thot.DS.Domain.Save {
+namespace Domain.Save {
     public class DSGraphSaveDataSO : ScriptableObject {
         [field: SerializeField] public string Filename { get; set; }
 

@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace Editor.Domain {
+namespace Domain.Save {
+    
     [Serializable]
-    public class DSChoice {
+    public class DSChoiceSaveData {
         [field: SerializeField] public string Text { get; set; }
         [field: SerializeField] public string NodeID { get; set; }
     }

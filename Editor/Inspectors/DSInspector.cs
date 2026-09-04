@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using Domain;
 using Editor.Adapters;
 using Editor.Domain;
-using thot.DS.Domain;
 using UnityEditor;
 
 namespace Editor.Inspectors {

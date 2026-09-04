@@ -1,10 +1,12 @@
+using Domain;
 using Editor.Domain;
+using Editor.Elements;
 using Editor.Style;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Elements {
+namespace Elements {
     class DSMultipleChoiceNode : DSNode {
         protected override void Initialize(Vector2 position) {
             base.Initialize(position);

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Domain;
 using Editor.Domain;
-using thot.DS.Domain;
 using UnityEngine;
 
 public class DSDialogueContainerSO : ScriptableObject {

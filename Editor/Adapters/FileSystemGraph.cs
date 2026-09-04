@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Editor.Domain;
+using Domain;
+using Domain.Save;
 using Editor.Elements;
-using thot.DS.Domain;
-using thot.DS.Domain.Save;
 using thot.DS.Windows;
 using UnityEditor.Experimental.GraphView;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Editor.Domain;
 using UnityEngine;
 
-namespace thot.DS.Domain {
+namespace Domain {
     public class DSDialogueSO : ScriptableObject {
         [field: SerializeField] public string DialogueName { get; set; }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Editor.Domain;
 using UnityEngine;
 
-namespace thot.DS.Domain.Save {
+namespace Domain.Save {
     [Serializable]
     public class DSNodeSaveData {
         [field: SerializeField] public string ID { get; set; }

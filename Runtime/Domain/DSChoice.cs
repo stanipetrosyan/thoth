@@ -1,10 +1,9 @@
 using System;
 using UnityEngine;
 
-namespace thot.DS.Domain.Save {
-    
+namespace Domain {
     [Serializable]
-    public class DSChoiceSaveData {
+    public class DSChoice {
         [field: SerializeField] public string Text { get; set; }
         [field: SerializeField] public string NodeID { get; set; }
     }
