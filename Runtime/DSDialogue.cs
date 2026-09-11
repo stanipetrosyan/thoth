@@ -18,6 +18,9 @@ public class DSDialogue : MonoBehaviour {
     }
 
     public string GetNextDialogue() {
-        return dialogue.Choices[0].NextDialogue.Text;
+        DSDialogueSo nextDialogue = dialogue.Choices[0].NextDialogue;
+        dialogue = nextDialogue;
+        
+        return nextDialogue.Text;
     }
 }
