@@ -6,6 +6,7 @@ using Domain.Save;
 using Editor.Elements;
 using Elements;
 using thot.DS.Windows;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 
 namespace Editor.Adapters {
@@ -39,17 +40,28 @@ namespace Editor.Adapters {
         #region Save Methods
 
         public void Save(string filename) {
+            createdDialogues.Clear();
+
             DSGraphSaveDataSO graphData =
-                Assets.UpsertAsset<DSGraphSaveDataSO>("Assets/DialogueSystem/Dialogues/Graphs", $"{filename}");
+                Assets.UpsertAsset<DSGraphSaveDataSO>(
+                    "Assets/DialogueSystem/Dialogues/Graphs",
+                    filename
+                );
+
             graphData.Initialize(filename);
 
             DSDialogueContainerSO dialogueContainer =
-                Assets.CreateAsset<DSDialogueContainerSO>(containerFolderPath, filename);
+                Assets.UpsertAsset<DSDialogueContainerSO>(
+                    containerFolderPath,
+                    filename
+                );
+
             dialogueContainer.Initialize(filename);
 
             SaveNodes(graphData, dialogueContainer);
 
             Assets.SaveAsset(graphData);
+            Assets.SaveAsset(dialogueContainer);
         }
 
 
@@ -62,7 +74,31 @@ namespace Editor.Adapters {
                 SaveNodeToScriptableObject(node, dialogueContainer);
             }
 
+            DeleteRemovedDialogues(nodes);
+
             UpdateDialogChoicesConnections(nodes);
+            Assets.SaveAsset(graphData);
+            Assets.SaveAsset(dialogueContainer);
+        }
+
+        private void DeleteRemovedDialogues(List<DSNode> nodes) {
+            var dialoguesPath = $"{containerFolderPath}/Global/Dialogues";
+            var currentDialogueNames = nodes.Select(node => node.DialogueName).ToHashSet();
+            string[] guids = AssetDatabase.FindAssets("t:DSDialogueSo", new[] { dialoguesPath });
+            foreach (string guid in guids) {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                DSDialogueSo dialogue = AssetDatabase.LoadAssetAtPath<DSDialogueSo>(assetPath);
+                if (dialogue == null) {
+                    continue;
+                }
+
+                if (!currentDialogueNames.Contains(dialogue.DialogueName)) {
+                    AssetDatabase.DeleteAsset(assetPath);
+                }
+            }
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         private void SaveNodeToScriptableObject(DSNode node, DSDialogueContainerSO dialogueContainer) {
@@ -98,10 +134,17 @@ namespace Editor.Adapters {
                     var nodeChoice = node.Choices[choiceIndex];
 
                     if (string.IsNullOrEmpty(nodeChoice.NodeID)) {
+                        dialogue.Choices[choiceIndex].NextDialogue = null;
                         continue;
                     }
 
-                    dialogue.Choices[choiceIndex].NextDialogue = createdDialogues[nodeChoice.NodeID];
+                    if (!createdDialogues.TryGetValue(nodeChoice.NodeID, out DSDialogueSo nextDialogue)) {
+                        dialogue.Choices[choiceIndex].NextDialogue = null;
+                        nodeChoice.NodeID = null;
+                        continue;
+                    }
+
+                    dialogue.Choices[choiceIndex].NextDialogue = nextDialogue;
                 }
 
                 Assets.SaveAsset(dialogue);
@@ -174,10 +217,13 @@ namespace Editor.Adapters {
                     DSChoice choiceData = (DSChoice)choicePort.userData;
 
                     if (string.IsNullOrEmpty(choiceData.NodeID)) {
-                        return;
+                        continue;
                     }
-
-                    DSNode nextNode = loadedNodes[choiceData.NodeID];
+                    
+                    if (!loadedNodes.TryGetValue(choiceData.NodeID, out DSNode nextNode))
+                    {
+                        continue;
+                    }
 
                     Port nextNodeInputPort = (Port)nextNode.inputContainer.Children().First();
                     Edge edge = choicePort.ConnectTo(nextNodeInputPort);

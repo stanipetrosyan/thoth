@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Editor.Adapters {
     public static class Assets {
-        
         public static T CreateAsset<T>(string path, string assetName) where T : ScriptableObject {
             var asset = LoadAsset<T>(path, assetName);
 
@@ -19,23 +18,34 @@ namespace Editor.Adapters {
 
         public static T UpsertAsset<T>(string path, string assetName) where T : ScriptableObject {
             var asset = LoadAsset<T>(path, assetName);
-            var fullPath = $"{path}/{assetName}.asset";
-            
-            if (asset) {
-                AssetDatabase.DeleteAsset(fullPath);
-            }
-            
-            var assetUpdated = ScriptableObject.CreateInstance<T>();
-            AssetDatabase.CreateAsset(assetUpdated, fullPath);
-            Debug.Log(assetUpdated);
 
-            return assetUpdated;
+            if (asset != null) {
+                return asset;
+            }
+
+            var fullPath = $"{path}/{assetName}.asset";
+
+            asset = ScriptableObject.CreateInstance<T>();
+
+            AssetDatabase.CreateAsset(asset, fullPath);
+
+            return asset;
+        }
+
+        public static bool DeleteAsset<T>(string path, string assetName) where T : ScriptableObject {
+            var asset = LoadAsset<T>(path, assetName);
+            if (asset == null) {
+                return false;
+            }
+
+            var fullPath = $"{path}/{assetName}.asset";
+            return AssetDatabase.DeleteAsset(fullPath);
         }
 
         public static T LoadAsset<T>(string path, string assetName) where T : ScriptableObject {
             return AssetDatabase.LoadAssetAtPath<T>($"{path}/{assetName}.asset");
         }
-        
+
         public static void SaveAsset(Object asset) {
             EditorUtility.SetDirty(asset);
 
