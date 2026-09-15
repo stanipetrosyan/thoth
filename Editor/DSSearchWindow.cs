@@ -43,7 +43,7 @@ namespace Editor {
 
         public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context) {
             var localMousePosition = graphView.GetLocalMousePosition(context.screenMousePosition, true);
-            
+
             graphView.CreateElementNode(DSNode.From((DSDialogueType)searchTreeEntry.userData, localMousePosition));
             return true;
         }
