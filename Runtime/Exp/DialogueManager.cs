@@ -1,3 +1,4 @@
+using Domain;
 using UnityEngine;
 
 namespace Exp {
@@ -10,7 +11,7 @@ namespace Exp {
 
         public string SelectedDialogueId => selectedDialogueId;
 
-        public RuntimeDialogueNode SelectedDialogue {
+        private RuntimeDialogueNode SelectedDialogue {
             get {
                 if (runtimeDialogue == null)
                     return null;
@@ -19,5 +20,10 @@ namespace Exp {
                 );
             }
         }
+        
+        public string GetStartDialogue() {
+            return SelectedDialogue.DialogueText;
+        }
+        
     }
 }
