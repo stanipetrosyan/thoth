@@ -36,6 +36,9 @@ namespace Editor.Exp {
                 if (node is DialogueNode dialogueNode) {
                     ProcessDialogueNode(dialogueNode, runtimeNode, nodeIDMap);
                 }
+                else if (node is ChoiceNode choiceNode) {
+                    ProcessChoiceNode(choiceNode, runtimeNode, nodeIDMap);
+                }
                 
                 runtimeGraph.AllNodes.Add(runtimeNode);
             }
@@ -54,8 +57,22 @@ namespace Editor.Exp {
             }
         }
 
-        private void ProcessChoideNode(ChoiceNode node, RuntimeDialogueNode runtimeNode, Dictionary<INode, string> nodeIDMap) {
+        private void ProcessChoiceNode(ChoiceNode node, RuntimeDialogueNode runtimeNode, Dictionary<INode, string> nodeIDMap) {
+            runtimeNode.Speaker = GetPortValue<string>(node.GetInputPortByName("Speaker"));
+            runtimeNode.DialogueText = GetPortValue<string>(node.GetInputPortByName("Dialogue"));
             
+            // TODO: cannot be a string reference, must be something else
+            node.GetOutputPorts().Where(p => p.name.StartsWith("Choice ")).ToList().ForEach(outputPort => {
+                var index = outputPort.name.Substring("Choice ".Length);
+                var textPort = node.GetInputPortByName($"Choide Text {index}");
+
+                var choiceData = new ChoiceData {
+                    ChoiceText = GetPortValue<string>(textPort),
+                    DesinationNodeId = outputPort.firstConnectedPort != null ? nodeIDMap[outputPort.firstConnectedPort.GetNode()] : null,
+                };
+                
+                runtimeNode.Choices.Add(choiceData);
+            });
         }
 
         private T GetPortValue<T>(IPort port) {

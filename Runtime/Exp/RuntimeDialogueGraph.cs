@@ -9,7 +9,7 @@ namespace Exp {
     }
 
     [Serializable]
-    public class RuntimeDialogueNode {
+    public class RuntimeDialogueNode{
         public string NodeID;
         public string Speaker;
         public string DialogueText;
