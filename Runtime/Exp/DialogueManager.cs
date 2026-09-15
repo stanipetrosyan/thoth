@@ -25,5 +25,13 @@ namespace Exp {
             return SelectedDialogue.DialogueText;
         }
         
+        public string GetNextDialogue() {
+            RuntimeDialogueNode nextDialogue =
+                runtimeDialogue.AllNodes.Find(node => node.NodeID == SelectedDialogue.NextNodeID);
+        
+            return nextDialogue.DialogueText;
+        }
+
+        
     }
 }

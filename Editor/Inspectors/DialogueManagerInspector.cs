@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Domain;
 using Exp;
 using UnityEditor;
-using UnityEngine;
 
 namespace Editor.Inspectors {
     [CustomEditor(typeof(DialogueManager))]
@@ -170,9 +168,7 @@ namespace Editor.Inspectors {
                 return;
             }
 
-            for (int i = 0;
-                 i < selectedDialogue.Choices.Count;
-                 i++) {
+            for (int i = 0; i < selectedDialogue.Choices.Count; i++) {
                 ChoiceData choice =
                     selectedDialogue.Choices[i];
 
